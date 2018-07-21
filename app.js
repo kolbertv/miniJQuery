@@ -39,3 +39,17 @@ console.log("starting app!");
 //
 // //Пример обращения к эементу по name="link"
 // $("[link]").addText("ghjkl");
+
+$().ajax({
+    url: "https://jsonplaceholder.typicode.com/users/1"
+}, function (response) {
+    console.log(response);
+});
+
+// $().ajax({
+//     url: "https://jsonplaceholder.typicode.com/users/1"
+// }, function (response) {
+//
+//     console.log(response);
+//
+// });

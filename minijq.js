@@ -13,14 +13,15 @@ function MiniJQ(selector) {
 
     if (typeof this.selector !== "string") {
 
-        console.log('Ошибка 1: Введите имя селектора правильно: "#id", ".class", "tagName", "[name]"');
+            console.log('Ошибка 1: Введите имя селектора правильно: "#id", ".class", "tagName", "[name]"');
+
         return this.result
     }
 
     if (!this.selector) {
 
         console.log('Ошибка 2: Введите имя селектора правильно: "#id", ".class", "tagName", "[name]"');
-        return this.result;
+       return this.result;
     }
 
     var regExpSelector = /^(?:#([\w-]+)|(\w+)|\.([\w-]+)|\[([\w-]+)\])$/;
@@ -156,5 +157,33 @@ MiniJQ.prototype.delAttr = function (name) {
         }
         return this;
     }
+
+};
+
+MiniJQ.prototype.ajax = function(options, callback) {
+
+    ajaxOptions = {
+        url: '',
+        data: '',
+        method: "GET",
+        async: true,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        user: '',
+        password: ''
+    };
+
+    ajaxOptions = Object.assign(ajaxOptions, options);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open(ajaxOptions.method, ajaxOptions.url, ajaxOptions.async, ajaxOptions.user,ajaxOptions.password);
+    xhr.setRequestHeader("Content-Type", ajaxOptions.contentType);
+    xhr.onreadystatechange = function () {
+        if ((xhr.readyState == 4) && (xhr.status ==200)) {
+            callback(xhr.responseText);
+        } else {
+            // можно приделать крутилку вертелку ожидалку
+        }
+    };
+    xhr.send( ajaxOptions.method === "POST"? ajaxOptions.data : null);
 
 };
