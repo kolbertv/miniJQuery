@@ -53,3 +53,6 @@ $().ajax({
 //     console.log(response);
 //
 // });
+
+
+console.log($('.one'));

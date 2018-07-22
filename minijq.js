@@ -46,16 +46,7 @@ function MiniJQ(selector) {
 
         //  result = d.querySelectorAll('.'+regExpArr[3]);
 
-        resultTag = d.getElementsByTagName("*");
-        var pattern = new RegExp("(^|\\s)" + regExpArr[3] + "(\\s|$)");
-
-        for (var i = 0; i < resultTag.length; i++) {
-            if (pattern.test(resultTag[i].className)) {
-                result.push(resultTag[i])
-            }
-        }
-
-        this.result = result;
+        this.result = getElementsByClassName(selector.substring(1));
 
 
     } else if (regExpArr[4]) {
@@ -187,3 +178,38 @@ MiniJQ.prototype.ajax = function(options, callback) {
     xhr.send( ajaxOptions.method === "POST"? ajaxOptions.data : null);
 
 };
+
+/**
+ * Функция для выборки элеметов по имени класса. Возвращает массив DOM элементов.
+ * @param selector str
+ * @returns array
+ */
+function getElementsByClassName(selector) {
+    if(document.getElementsByClassName){ // IE8+
+        return document.getElementsByClassName(selector);
+    }
+    else{
+        var elements, pattern, i, results = [];
+
+        if (document.querySelectorAll) { // IE8
+            return document.querySelectorAll(SELECTOR_SYMBOLS.class + selector);
+        }
+        else if (document.evaluate) { // IE6, IE7
+            pattern = ".//*[contains(concat(' ', @class, ' '), ' " + selector + " ')]";
+            elements = document.evaluate(pattern, document, null, 0, null);
+            while ((i = elements.iterateNext())) {
+                results.push(i);
+            }
+        }
+        else { // остальные
+            elements = document.getElementsByTagName("*");
+            pattern = new RegExp("(^|\\s)" + selector + "(\\s|$)");
+            for (i = 0; i < elements.length; i++) {
+                if ( pattern.test(elements[i].className) ) {
+                    results.push(elements[i]);
+                }
+            }
+        }
+        return results;
+    }
+}
