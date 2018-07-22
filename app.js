@@ -15,7 +15,8 @@ console.log("starting app!");
 // //Встроенные методы для работы с элементами
 //
 // // Добавляет текст или к одному элементу или ко всем если много
-// $(".two").addText("добавить текст");
+// $(".one-one-one").addText("добавить текст").addAttr("title", "новый атрибут");
+// $(".one__one_one").addText("добавить текст").addAttr("title", "новый атрибут");
 //
 // // Возвращает текст элемента или первого элемента если их много
 // console.log($(".two").getText());
@@ -40,11 +41,11 @@ console.log("starting app!");
 // //Пример обращения к эементу по name="link"
 // $("[link]").addText("ghjkl");
 
-$().ajax({
-    url: "https://jsonplaceholder.typicode.com/users/1"
-}, function (response) {
-    console.log(response);
-});
+// $().ajax({
+//     url: "https://jsonplaceholder.typicode.com/users/1"
+// }, function (response) {
+//     console.log(response);
+// });
 
 // $().ajax({
 //     url: "https://jsonplaceholder.typicode.com/users/1"
@@ -53,3 +54,10 @@ $().ajax({
 //     console.log(response);
 //
 // });
+
+// display = "none"
+//$(".one").hide();
+
+// По умолчанию display="block" можно задать свои значения display
+//$(".one").show();
+// $(".one").show("inline");

@@ -1,4 +1,4 @@
-// var version = "0.0.1";
+// var version = "0.0.3";
 
 var $ = function (selector) {
     return new MiniJQ(selector);
@@ -65,6 +65,35 @@ function MiniJQ(selector) {
         this.result = result;
     }
 }
+
+MiniJQ.prototype.ajax = function(options, callback) {
+
+    ajaxOptions = {
+        url: '',
+        data: '',
+        method: "GET",
+        async: true,
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        user: '',
+        password: ''
+    };
+
+    ajaxOptions = Object.assign(ajaxOptions, options);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open(ajaxOptions.method, ajaxOptions.url, ajaxOptions.async, ajaxOptions.user,ajaxOptions.password);
+    xhr.setRequestHeader("Content-Type", ajaxOptions.contentType);
+    xhr.onreadystatechange = function () {
+        if ((xhr.readyState == 4) && (xhr.status ==200)) {
+            callback(xhr.responseText);
+        } else {
+            // можно приделать крутилку вертелку ожидалку
+        }
+    };
+    xhr.send( ajaxOptions.method === "POST"? ajaxOptions.data : null);
+
+};
+
 
 MiniJQ.prototype.addText = function (string) {
 
@@ -160,30 +189,44 @@ MiniJQ.prototype.delAttr = function (name) {
 
 };
 
-MiniJQ.prototype.ajax = function(options, callback) {
+MiniJQ.prototype.hide = function () {
 
-    ajaxOptions = {
-        url: '',
-        data: '',
-        method: "GET",
-        async: true,
-        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-        user: '',
-        password: ''
-    };
+    if (!this.result.length) {
 
-    ajaxOptions = Object.assign(ajaxOptions, options);
+        this.result.style.display = "none";
+        return this;
+    } else {
 
-    var xhr = new XMLHttpRequest();
-    xhr.open(ajaxOptions.method, ajaxOptions.url, ajaxOptions.async, ajaxOptions.user,ajaxOptions.password);
-    xhr.setRequestHeader("Content-Type", ajaxOptions.contentType);
-    xhr.onreadystatechange = function () {
-        if ((xhr.readyState == 4) && (xhr.status ==200)) {
-            callback(xhr.responseText);
-        } else {
-            // можно приделать крутилку вертелку ожидалку
+        for (var i = 0; i < this.result.length; i++) {
+            this.result[i].style.display = "none";
         }
-    };
-    xhr.send( ajaxOptions.method === "POST"? ajaxOptions.data : null);
+
+        return this;
+    }
+
+};
+
+MiniJQ.prototype.show = function (string) {
+
+    var display  = "";
+    if (string === undefined) {
+        display="block";
+    } else {
+        display=string;
+    }
+
+    if (!this.result.length) {
+
+        this.result.style.display = display;
+        return this;
+    } else {
+
+        for (var i = 0; i < this.result.length; i++) {
+            this.result[i].style.display = display;
+        }
+
+        return this;
+    }
+
 
 };
