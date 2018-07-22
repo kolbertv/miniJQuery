@@ -43,9 +43,6 @@ function MiniJQ(selector) {
     } else if (regExpArr[3]) {
 
         // console.log('селектор класс');
-
-        //  result = d.querySelectorAll('.'+regExpArr[3]);
-
         this.result = getElementsByClassName(selector.substring(1));
 
 
